@@ -7,7 +7,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/kluisz/traefik-correlation-id-plugin/uuid"
+	"github.com/google/uuid"
 )
 
 // Config the plugin configuration.
