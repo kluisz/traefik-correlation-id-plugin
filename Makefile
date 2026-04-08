@@ -14,7 +14,7 @@ yaegi_test:
 	$(eval GOPATH_TMP := $(shell mktemp -d))
 	mkdir -p $(GOPATH_TMP)/src/github.com/kluisz
 	ln -s $(CURDIR) $(GOPATH_TMP)/src/github.com/kluisz/traefik-correlation-id-plugin
-	cp -r $(CURDIR)/vendor/. $(GOPATH_TMP)/src/
+	[ ! -d $(CURDIR)/vendor ] || cp -r $(CURDIR)/vendor/. $(GOPATH_TMP)/src/
 	GOPATH=$(GOPATH_TMP) yaegi test -v .
 	rm -rf $(GOPATH_TMP)
 

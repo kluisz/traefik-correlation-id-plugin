@@ -5,9 +5,9 @@ package traefik_correlation_id_plugin
 
 import (
 	"context"
+	"crypto/rand"
+	"encoding/hex"
 	"net/http"
-
-	"github.com/kluisz/traefik-correlation-id-plugin/github.com/google/uuid"
 )
 
 // Config the plugin configuration.
@@ -29,7 +29,7 @@ type Correlation struct {
 }
 
 // New created a new plugin.
-func New(ctx context.Context, next http.Handler, config *Config, name string) (http.Handler, error) {
+func New(_ context.Context, next http.Handler, config *Config, name string) (http.Handler, error) {
 	if config.HeaderName == "" {
 		config.HeaderName = "X-Klz-Correlation-Id"
 	}
@@ -42,12 +42,10 @@ func New(ctx context.Context, next http.Handler, config *Config, name string) (h
 }
 
 func (c *Correlation) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
-	// A Version 7 UUID is a universally unique identifier that is generated using a
-	// timestamp, a counter and a cryptographically strong random number. Generally,
-	// Version 7 UUIDs have better entropy (i.e. randomness) than Version 1 UUIDs.
 	if request.Header.Get(c.headerName) == "" {
-		if id, err := uuid.NewV7(); err == nil {
-			request.Header.Set(c.headerName, id.String())
+		b := make([]byte, 16)
+		if _, err := rand.Read(b); err == nil {
+			request.Header.Set(c.headerName, hex.EncodeToString(b))
 		}
 	}
 
