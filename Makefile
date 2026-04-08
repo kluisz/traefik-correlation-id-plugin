@@ -11,7 +11,11 @@ test:
 	go test -v -cover ./...
 
 yaegi_test:
-	yaegi test -v .
+	$(eval GOPATH_TMP := $(shell mktemp -d))
+	mkdir -p $(GOPATH_TMP)/src/github.com/kluisz
+	ln -s $(CURDIR) $(GOPATH_TMP)/src/github.com/kluisz/traefik-correlation-id-plugin
+	GOPATH=$(GOPATH_TMP) yaegi test -v .
+	rm -rf $(GOPATH_TMP)
 
 vendor:
 	go mod vendor
