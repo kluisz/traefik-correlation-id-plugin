@@ -1,3 +1,3 @@
-module github.com/kluisz/traefik-correlation-id-plugin
+module github.com/navacloud/traefik-correlation-id-plugin
 
 go 1.21

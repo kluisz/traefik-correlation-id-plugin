@@ -1,9 +1,10 @@
 displayName: Correlation ID
 type: middleware
 
-import: github.com/kluisz/traefik-correlation-id-plugin
+import: github.com/navacloud/traefik-correlation-id-plugin
 
 summary: 'This plugin adds a uuid7 correleation ID to the request headers'
 
 testData:
-  headerName: "X-Klz-Correlation-Id"
+  headerName: "X-Nava-Correlation-Id"
+  legacyHeaderName: "X-Klz-Correlation-Id"
